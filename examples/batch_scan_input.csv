@@ -1,0 +1,4 @@
+asin,title,brand,price,coupon,reviews,reviews_increasement,total_units,total_units_growth,total_amount,total_amount_growth,bsr,bsr_rank_cr,rank_position,ad_position,traffic_percentage
+B0EXAMPLE01,Example Product A,Brand A,29.99,5,1200,45,1800,35,53982,28,1200,42,8,2,12
+B0EXAMPLE02,Example Product B,Brand B,24.99,0,4300,8,1500,4,37485,3,1800,5,3,18,7
+B0EXAMPLE03,Example Product C,Brand C,19.99,8,620,15,900,-12,17991,-20,4200,-18,40,6,4

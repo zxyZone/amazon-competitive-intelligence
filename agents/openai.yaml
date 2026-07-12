@@ -1,0 +1,6 @@
+interface:
+  display_name: "Amazon Competitive Intelligence"
+  short_description: "Amazon competitor intelligence and follow-up reviews"
+  default_prompt: "Use $amazon-competitive-intelligence to analyze an Amazon competitor ASIN or batch of ASINs with evidence, confidence, and next actions."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,10 @@
+{
+  "mode": "single_deep_dive",
+  "marketplace": "US",
+  "asin": "B0EXAMPLE01",
+  "data_sources": ["SellerSprite MCP", "manual Amazon frontend notes"],
+  "notes": {
+    "goal": "Reverse engineer lifecycle, ads, promotion intent, and competitive response.",
+    "required_output": "Evidence-backed deep dive with confidence and counter-evidence."
+  }
+}

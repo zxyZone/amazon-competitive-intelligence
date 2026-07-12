@@ -1,0 +1,14 @@
+[
+  {
+    "asin": "B0EXAMPLE01",
+    "price": 29.99,
+    "coupon": 5,
+    "reviews": 1200,
+    "reviews_increasement": 45,
+    "total_units": 1800,
+    "total_amount": 53982,
+    "bsr": 1200,
+    "rank_position": 8,
+    "ad_position": 2
+  }
+]
