@@ -1,5 +1,9 @@
 # Evidence Rules
 
+## 中文导读
+
+本文件是“证据到推断”的规则库。它不是绝对判定器，而是帮助 Codex 把价格、BSR、销量、Review、广告排名、关键词、Coupon、Deal、站外痕迹这些信号组合起来，形成有置信度的运营判断。
+
 ## Lifecycle Signals
 
 Classify lifecycle with confidence, not certainty.

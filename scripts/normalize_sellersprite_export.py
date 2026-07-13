@@ -2,6 +2,11 @@
 """Normalize Amazon competitor exports into canonical JSON.
 
 Supports CSV, TSV, JSON, and XLSX when openpyxl is available.
+
+中文说明：
+这个脚本把卖家精灵/SIF/Sorftime/手动表格里不同叫法的字段，统一映射成
+Skill 内部使用的标准字段，比如 asin、price、reviews、total_units。
+后续评分脚本只认标准字段，所以字段别名主要在这里维护。
 """
 
 from __future__ import annotations
@@ -13,6 +18,8 @@ from pathlib import Path
 from typing import Any
 
 
+# 字段别名表：左边是 Skill 内部标准字段，右边是导入表里可能出现的列名。
+# 后续如果发现卖家精灵/SIF/Sorftime 导出的中文列名不同，优先在这里补别名。
 FIELD_ALIASES = {
     "asin": ["asin", "ASIN"],
     "title": ["title", "product title", "商品标题", "标题"],
@@ -45,10 +52,12 @@ FIELD_ALIASES = {
 
 
 def normalize_header(value: str) -> str:
+    """把表头转成宽松匹配格式，减少大小写、下划线、空格造成的匹配失败。"""
     return " ".join(str(value).strip().lower().replace("_", " ").split())
 
 
 def alias_map(headers: list[str]) -> dict[str, str]:
+    """根据输入表头找到可映射的标准字段。"""
     normalized = {normalize_header(h): h for h in headers}
     result = {}
     for canonical, aliases in FIELD_ALIASES.items():
@@ -61,6 +70,7 @@ def alias_map(headers: list[str]) -> dict[str, str]:
 
 
 def clean_value(value: Any) -> Any:
+    """清洗单元格值：去掉货币符号、逗号、百分号，并尽量转成数字。"""
     if value is None:
         return None
     if isinstance(value, str):
@@ -79,6 +89,7 @@ def clean_value(value: Any) -> Any:
 
 
 def read_rows(path: Path) -> list[dict[str, Any]]:
+    """读取 CSV/TSV/JSON/XLSX；XLSX 依赖 openpyxl，没有时提示先转 CSV。"""
     suffix = path.suffix.lower()
     if suffix == ".json":
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -105,6 +116,7 @@ def read_rows(path: Path) -> list[dict[str, Any]]:
 
 
 def normalize_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """把原始行转换为标准字段行，同时保留 _raw 方便追溯原始证据。"""
     if not rows:
         return []
     headers = list(rows[0].keys())

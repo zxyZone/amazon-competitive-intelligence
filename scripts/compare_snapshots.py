@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Compare previous and current normalized ASIN snapshots."""
+"""Compare previous and current normalized ASIN snapshots.
+
+中文说明：
+这个脚本用于 follow_up_review 模式，对比上次快照和本次快照。
+它只计算字段变化，不解释原因；原因解释应交给 Skill 的证据规则和金刚推理流程。
+"""
 
 from __future__ import annotations
 
@@ -9,6 +14,8 @@ from pathlib import Path
 from typing import Any
 
 
+# 跟进复盘重点字段。后续如果新增库存、Buy Box、Deal 标识、站外证据分数，
+# 可以把字段加到这里，快照对比会自动输出变化。
 WATCH_FIELDS = [
     "price",
     "coupon",
@@ -25,10 +32,12 @@ WATCH_FIELDS = [
 
 
 def by_asin(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """按 ASIN 建索引，方便前后快照一一对比。"""
     return {str(row.get("asin")): row for row in rows if row.get("asin")}
 
 
 def delta(previous: Any, current: Any) -> dict[str, Any]:
+    """计算数值变化；非数值字段只保留前后值。"""
     result = {"previous": previous, "current": current, "delta": None, "delta_pct": None}
     try:
         prev = float(previous)
@@ -42,6 +51,7 @@ def delta(previous: Any, current: Any) -> dict[str, Any]:
 
 
 def compare(previous_rows: list[dict[str, Any]], current_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """输出每个 ASIN 的新增、缺失或字段变化。"""
     previous = by_asin(previous_rows)
     current = by_asin(current_rows)
     output = []

@@ -1,5 +1,9 @@
 # Data Sources
 
+## 中文导读
+
+本文件定义数据边界：优先使用 SellerSprite、SIF、Sorftime MCP；MCP 不可用时使用用户手动导入的数据。Skill 可以做运营推断，但不能假装知道竞品后台真实广告花费、库存、TACOS、A/B 测试或站外预算。
+
 ## Source Priority
 
 1. SellerSprite MCP, SIF MCP, or Sorftime MCP.

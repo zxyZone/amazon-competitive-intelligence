@@ -5,6 +5,17 @@ description: Amazon competitor intelligence workflow for SellerSprite, SIF, Sorf
 
 # Amazon Competitive Intelligence
 
+## 中文导读
+
+这个 Skill 的目标不是简单生成一份竞品报告，而是把竞品 ASIN 当成一个运营系统来拆解：先判断任务模式，再确认数据边界，然后用金刚推理流程把事实、推断、置信度、反证和下一步动作分开输出。
+
+核心使用原则：
+
+- 先看输入属于单 ASIN 深潜、批量竞对扫描、对比后深潜，还是跟进复盘。
+- 先用 SellerSprite、SIF、Sorftime MCP；没有 MCP 时再吃用户导入的表格、截图、链接、Keepa 导出。
+- 所有结论必须区分“观察事实”和“运营推断”，不能把推测写成后台真相。
+- 生成 HTML、写飞书、提交 GitHub、开启定时任务前都要先问用户确认。
+
 ## Overview
 
 Use this skill to analyze Amazon competitors with evidence, confidence, counter-evidence, and next actions. Prefer connected MCP sources first, fall back to user-provided files, and label every conclusion as observed fact, inference, or unknown.
@@ -42,11 +53,23 @@ For data requirements and fallback fields, read `references/data-sources.md`.
 1. Identify mode and marketplace.
 2. Inventory available data sources. Use MCP if available; otherwise request/import the minimum manual files.
 3. Normalize evidence into ASIN-level facts: product, price, BSR/sales, review, keyword, ad, coupon/deal, listing, relation, and history fields.
-4. Apply the King Kong reasoning checklist from `references/kingkong-reasoning.md`.
+4. Apply the King Kong reasoning sequence from `references/kingkong-reasoning.md`: classify, first-principles framing, bounded Bayesian update, phase-shift detection, time-optimal action, and red-team review.
 5. Apply evidence rules from `references/evidence-rules.md`.
 6. Produce the matching report template from `references/report-templates.md`.
 7. End with next actions, missing data, and a red-team review.
 8. Ask before creating persistent outputs such as HTML reports, Feishu records, GitHub commits, or scheduled tasks.
+
+## Required Reasoning Blocks
+
+Every full report must include these blocks, even if some are brief:
+
+1. `Mode classification`: why this is single deep dive, batch scan, compare-then-deep-dive, or follow-up review.
+2. `First-principles frame`: target decision, product/customer/job-to-be-done, inputs, outputs, constraints, and minimum viable evidence.
+3. `Evidence ledger`: observed facts, inferred conclusions, missing data, source conflicts.
+4. `Bayesian confidence update`: prior or baseline assumption, evidence that raises/lowers confidence, updated confidence.
+5. `Phase-shift check`: whether growth, promotion, ads, reviews, price, or offsite signals show non-linear change.
+6. `Time-optimal action`: deep dive, monitor, counterattack, small test, ignore, or stop.
+7. `Red-team review`: strongest alternative explanation and what would disprove the recommendation.
 
 ## MCP Usage Guidance
 
